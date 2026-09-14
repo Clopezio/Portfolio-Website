@@ -10,6 +10,8 @@
 
     if (!toggle || !panel) return;
 
+    const navbar = toggle.closest(".navbar");
+
     const closeMenu = () => {
       panel.classList.remove("is-open");
       toggle.setAttribute("aria-expanded", "false");
@@ -25,6 +27,16 @@
 
     panel.addEventListener("click", (event) => {
       if (event.target.closest("a")) closeMenu();
+    });
+
+    document.addEventListener("pointerdown", (event) => {
+      if (!panel.classList.contains("is-open") || navbar?.contains(event.target)) return;
+      closeMenu();
+    });
+
+    document.addEventListener("focusin", (event) => {
+      if (!panel.classList.contains("is-open") || navbar?.contains(event.target)) return;
+      closeMenu();
     });
 
     document.addEventListener("keydown", (event) => {
